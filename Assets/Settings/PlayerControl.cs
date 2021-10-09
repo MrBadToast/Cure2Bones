@@ -33,6 +33,38 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d9711fe-811c-49f1-a752-dcbe21415bf6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""pick"",
+                    ""type"": ""Button"",
+                    ""id"": ""d6a749a5-f7cc-45ad-81d0-93be49c0d3fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""4cfac173-ae8c-4b70-a0d3-2a79d5348fe1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""charge"",
+                    ""type"": ""Button"",
+                    ""id"": ""52b9d537-9dec-47b9-8cc7-38a34482ec4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +133,50 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""lookaround"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40987a54-a2e3-4d21-98cd-13c6765591a9"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f9b67a0-57b1-4d31-bcc6-f85a6bbb78a6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16eb4c2d-af33-4221-bfd1-f6f3aa4c28b3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae1ea0d9-47e9-4839-a7d4-fd4548a2d1ab"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""charge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +187,10 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_move = m_Player.FindAction("move", throwIfNotFound: true);
         m_Player_lookaround = m_Player.FindAction("lookaround", throwIfNotFound: true);
+        m_Player_jump = m_Player.FindAction("jump", throwIfNotFound: true);
+        m_Player_pick = m_Player.FindAction("pick", throwIfNotFound: true);
+        m_Player_attack = m_Player.FindAction("attack", throwIfNotFound: true);
+        m_Player_charge = m_Player.FindAction("charge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +242,20 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_move;
     private readonly InputAction m_Player_lookaround;
+    private readonly InputAction m_Player_jump;
+    private readonly InputAction m_Player_pick;
+    private readonly InputAction m_Player_attack;
+    private readonly InputAction m_Player_charge;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
         public PlayerActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @move => m_Wrapper.m_Player_move;
         public InputAction @lookaround => m_Wrapper.m_Player_lookaround;
+        public InputAction @jump => m_Wrapper.m_Player_jump;
+        public InputAction @pick => m_Wrapper.m_Player_pick;
+        public InputAction @attack => m_Wrapper.m_Player_attack;
+        public InputAction @charge => m_Wrapper.m_Player_charge;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +271,18 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @lookaround.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
                 @lookaround.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
                 @lookaround.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
+                @jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @pick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPick;
+                @pick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPick;
+                @pick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPick;
+                @attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @charge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
+                @charge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
+                @charge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +293,18 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @lookaround.started += instance.OnLookaround;
                 @lookaround.performed += instance.OnLookaround;
                 @lookaround.canceled += instance.OnLookaround;
+                @jump.started += instance.OnJump;
+                @jump.performed += instance.OnJump;
+                @jump.canceled += instance.OnJump;
+                @pick.started += instance.OnPick;
+                @pick.performed += instance.OnPick;
+                @pick.canceled += instance.OnPick;
+                @attack.started += instance.OnAttack;
+                @attack.performed += instance.OnAttack;
+                @attack.canceled += instance.OnAttack;
+                @charge.started += instance.OnCharge;
+                @charge.performed += instance.OnCharge;
+                @charge.canceled += instance.OnCharge;
             }
         }
     }
@@ -201,5 +313,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLookaround(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnPick(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnCharge(InputAction.CallbackContext context);
     }
 }
