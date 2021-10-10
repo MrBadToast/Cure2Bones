@@ -14,9 +14,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "lookaround",
+                    "name": "lookaround_x",
                     "type": "Value",
                     "id": "34bf0f53-bef6-4d80-aca5-1e783fc2cdb8",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "lookaround_y",
+                    "type": "Value",
+                    "id": "0736c9fa-1e3f-4339-9701-1c97e00b33ec",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
@@ -117,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "lookaround",
+                    "action": "lookaround_x",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -146,7 +154,7 @@
                 {
                     "name": "",
                     "id": "16eb4c2d-af33-4221-bfd1-f6f3aa4c28b3",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -162,6 +170,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "87d88726-21ec-4b20-8c61-9e043681b2d6",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "lookaround_y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -27,9 +27,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""lookaround"",
+                    ""name"": ""lookaround_x"",
                     ""type"": ""Value"",
                     ""id"": ""34bf0f53-bef6-4d80-aca5-1e783fc2cdb8"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""lookaround_y"",
+                    ""type"": ""Value"",
+                    ""id"": ""0736c9fa-1e3f-4339-9701-1c97e00b33ec"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -130,7 +138,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""lookaround"",
+                    ""action"": ""lookaround_x"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -159,7 +167,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""16eb4c2d-af33-4221-bfd1-f6f3aa4c28b3"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -177,6 +185,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""charge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87d88726-21ec-4b20-8c61-9e043681b2d6"",
+                    ""path"": ""<Mouse>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""lookaround_y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,7 +205,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_move = m_Player.FindAction("move", throwIfNotFound: true);
-        m_Player_lookaround = m_Player.FindAction("lookaround", throwIfNotFound: true);
+        m_Player_lookaround_x = m_Player.FindAction("lookaround_x", throwIfNotFound: true);
+        m_Player_lookaround_y = m_Player.FindAction("lookaround_y", throwIfNotFound: true);
         m_Player_jump = m_Player.FindAction("jump", throwIfNotFound: true);
         m_Player_pick = m_Player.FindAction("pick", throwIfNotFound: true);
         m_Player_attack = m_Player.FindAction("attack", throwIfNotFound: true);
@@ -241,7 +261,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_move;
-    private readonly InputAction m_Player_lookaround;
+    private readonly InputAction m_Player_lookaround_x;
+    private readonly InputAction m_Player_lookaround_y;
     private readonly InputAction m_Player_jump;
     private readonly InputAction m_Player_pick;
     private readonly InputAction m_Player_attack;
@@ -251,7 +272,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         private @PlayerControl m_Wrapper;
         public PlayerActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @move => m_Wrapper.m_Player_move;
-        public InputAction @lookaround => m_Wrapper.m_Player_lookaround;
+        public InputAction @lookaround_x => m_Wrapper.m_Player_lookaround_x;
+        public InputAction @lookaround_y => m_Wrapper.m_Player_lookaround_y;
         public InputAction @jump => m_Wrapper.m_Player_jump;
         public InputAction @pick => m_Wrapper.m_Player_pick;
         public InputAction @attack => m_Wrapper.m_Player_attack;
@@ -268,9 +290,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @lookaround.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
-                @lookaround.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
-                @lookaround.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround;
+                @lookaround_x.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_x;
+                @lookaround_x.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_x;
+                @lookaround_x.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_x;
+                @lookaround_y.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_y;
+                @lookaround_y.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_y;
+                @lookaround_y.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookaround_y;
                 @jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
@@ -290,9 +315,12 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @move.started += instance.OnMove;
                 @move.performed += instance.OnMove;
                 @move.canceled += instance.OnMove;
-                @lookaround.started += instance.OnLookaround;
-                @lookaround.performed += instance.OnLookaround;
-                @lookaround.canceled += instance.OnLookaround;
+                @lookaround_x.started += instance.OnLookaround_x;
+                @lookaround_x.performed += instance.OnLookaround_x;
+                @lookaround_x.canceled += instance.OnLookaround_x;
+                @lookaround_y.started += instance.OnLookaround_y;
+                @lookaround_y.performed += instance.OnLookaround_y;
+                @lookaround_y.canceled += instance.OnLookaround_y;
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
@@ -312,7 +340,8 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnLookaround(InputAction.CallbackContext context);
+        void OnLookaround_x(InputAction.CallbackContext context);
+        void OnLookaround_y(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPick(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
