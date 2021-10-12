@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5187973040310974716}
   - component: {fileID: 5187973040310974719}
   - component: {fileID: 5187973040310974718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Patient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f3f2f76abc00c4ca041039a3abe28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   playerDetectRange: 10
   wallDetectRange: 10
   speed: 5
+  hpToHeal: 0
+  GermObjects: []

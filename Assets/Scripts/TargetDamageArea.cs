@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PunchArea : MonoBehaviour
+public class TargetDamageArea : MonoBehaviour
 {
     public List<TargetObject> targetsInReach;
 
@@ -48,4 +48,5 @@ public class PunchArea : MonoBehaviour
             }
         }
     }
+    
 }

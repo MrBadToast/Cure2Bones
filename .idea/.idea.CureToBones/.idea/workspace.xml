@@ -15,7 +15,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HitData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -23,12 +24,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/HitboxRotationCorrection.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TestTarget.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgradeData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
       </list>
     </option>
@@ -84,6 +87,10 @@
       <workItem from="1633673552491" duration="7768000" />
       <workItem from="1633753373570" duration="12664000" />
       <workItem from="1633853850651" duration="7767000" />
+      <workItem from="1633926731976" duration="3916000" />
+      <workItem from="1633934172813" duration="767000" />
+      <workItem from="1633951155246" duration="1390000" />
+      <workItem from="1634022549845" duration="4989000" />
     </task>
     <servers />
   </component>
@@ -108,9 +115,13 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2536" y="240" key="run.anything.popup" timestamp="1633854806642">
+    <state x="377" y="0" width="1337" height="1028" key="dock-window-1" timestamp="1634032458954">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="377" y="0" width="1337" height="1028" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634032458954" />
+    <state x="2536" y="240" key="run.anything.popup" timestamp="1633930021415">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1633854806642" />
+    <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1633930021415" />
   </component>
 </project>

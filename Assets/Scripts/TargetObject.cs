@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TargetObject : MonoBehaviour
 {
-    public virtual void OnHit() { }
+    public virtual void OnHit(HitData hitData) { }
 }

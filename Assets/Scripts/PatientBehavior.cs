@@ -14,12 +14,16 @@ public enum PatientState
     PINNED
 }
 
-public class PatientBehavior : MonoBehaviour
+public class PatientBehavior : TargetObject
 {
+    [SerializeField] private AttackType type = AttackType.NORMAL;
     [SerializeField] private float playerDetectRange;
     [SerializeField] private float wallDetectRange;
     [SerializeField] private float speed;
+    [SerializeField] private float hpToHeal;
+    [SerializeField] private GameObject[] GermObjects;
 
+    
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
     private PatientState state = PatientState.IDLE;
@@ -37,6 +41,11 @@ public class PatientBehavior : MonoBehaviour
             targetPlayer = PlayerBehavior.Instance;
         
         StartCoroutine(BehaviorRoutine());
+    }
+
+    public override void OnHit(HitData hitData)
+    {
+        rBody.AddForce(hitData._direction * hitData._power);
     }
 
     IEnumerator BehaviorRoutine()

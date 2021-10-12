@@ -22,14 +22,14 @@ public class CharacterUpgradeData : MonoBehaviour
     }
 
     public float fullHealth = 0f;
-    public float healthRgTime = 0f;
+    //public float healthRgTime = 0f;
     public float healPerSeconds = 0f;
     public float fullStamina = 0f;
-    public float staminaRgTime = 0f;
+    public float staminaPerSeconds = 0f;
     public float attackMult = 1.0f;
-    public float attackRange = 0f;
+    //public float attackRange = 0f;
     public float chargeDistance = 0.0f;
-    public float chargeDiameter = 0.0f;
+    //public float chargeDiameter = 0.0f;
     public float throwDistance = 0.0f;
     public float throwMult = 1.0f;
     

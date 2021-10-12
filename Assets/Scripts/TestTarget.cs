@@ -7,7 +7,7 @@ public class TestTarget : TargetObject
     [SerializeField] private Material red;
     
     
-    public override void OnHit()
+    public override void OnHit(HitData hitData)
     {
         GetComponent<MeshRenderer>().material = red;
         GetComponent<Rigidbody>().AddForce(Vector3.forward * 5f,ForceMode.Impulse);

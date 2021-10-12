@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.SqlServer.Server;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,7 +19,8 @@ public class PlayerBehavior : MonoBehaviour
     private PlayerInput playerInput;
     [SerializeField] private GameObject modelGO;
     [SerializeField] private Transform footRCO;
-    [SerializeField] private PunchArea punchArea;
+    [SerializeField] private TargetDamageArea rushDamageArea;
+    [SerializeField] private TargetDamageArea chargeDamageArea;
     //[SerializeField] private GameObject effectOnHit;
     [SerializeField] private float speed;
     [SerializeField] private float lookSensitivity;
@@ -29,12 +31,14 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private float attackPower;
     [SerializeField] private float attackSTMUse;
     [SerializeField] private float maxHP;
+    [SerializeField] private float HPRegenPersec;
     [SerializeField] private float maxSTM;
-    [SerializeField] private float regenerationTime_HP;
+    [SerializeField] private float STMRegenPersec;
+    //[SerializeField] private float regenerationTime_HP;
     [SerializeField] private float regenerationTime_STM;
-    [SerializeField] private float charge_Distance;
     [SerializeField] private float charge_Speed;
     [SerializeField] private float charge_STMUse;
+    [SerializeField] private float charge_power;
 
     private float currentHP;
     private float currentSTM;
@@ -79,6 +83,12 @@ public class PlayerBehavior : MonoBehaviour
         playerControl.Player.jump.started += Jump;
     }
 
+    private void Start()
+    {
+        currentHP = maxHP;
+        currentSTM = maxSTM;
+    }
+
     private float chargeCoolDown = 1.0f;
     
     private void Update()
@@ -95,16 +105,26 @@ public class PlayerBehavior : MonoBehaviour
 
             case CharacterState.NORMAL:
                 Move(speed);
-                if (IsAttcking)
+                if (IsAttcking && currentSTM > attackSTMUse)
                 {
                     state = CharacterState.ATTACKRUSH;
                     break;
                 }
 
-                if (IsCharging && chargeCoolDown < 0f)
+                if (IsCharging && chargeCoolDown < 0f && currentSTM > charge_STMUse)
                 {
                     state = CharacterState.CHARGE;
+                    
+                    var targets = chargeDamageArea.GetTargetsInReach();
+                    foreach (var t in targets)
+                    {
+                        var h = new HitData((t.transform.position - transform.position).normalized,10.0f, charge_power);
+                        t.OnHit(h);
+                    }
+
                     chargeCoolDown = 1.0f;
+                    chargeTimer = 0.5f;
+                    
                 }
                 break;
             
@@ -116,7 +136,7 @@ public class PlayerBehavior : MonoBehaviour
                 break;
             
             case CharacterState.CHARGE:
-                
+                Charge();
                 break;
             
             case CharacterState.GRAPPLE:
@@ -124,6 +144,11 @@ public class PlayerBehavior : MonoBehaviour
             
             default:
                 break;
+        }
+
+        if (state != CharacterState.CHARGE)
+        {
+            chargeCoolDown -= Time.deltaTime;
         }
     }
 
@@ -162,22 +187,46 @@ public class PlayerBehavior : MonoBehaviour
             punchTimer -= Time.deltaTime;
             return;
         }
-        
-        Debug.Log("Punch");
-        
-        var targets = punchArea.GetTargetsInReach();
+
+        currentSTM -= attackSTMUse;
+        var targets = rushDamageArea.GetTargetsInReach();
         foreach (var t in targets)
         {
            // Instantiate(effectOnHit, t.transform.position, quaternion.identity);
-            t.OnHit();
+           var h = new HitData((t.transform.position - transform.position).normalized,20.0f, attackPower);
+           t.OnHit(h);
         }
 
         punchTimer = attackInterval;
     }
 
+    private float chargeTimer = 0f;
+    
+    private void Charge()
+    {
+        if (chargeTimer > 0)
+        {
+            rBody.velocity = transform.forward * charge_Speed;
+        }
+        else
+        {
+            state = CharacterState.NORMAL;
+        }
+    }
+    
     public bool IsTargetInRange()
     {
-        return punchArea.GetTargetsInReach().Count != 0;
+        return rushDamageArea.GetTargetsInReach().Count != 0;
+    }
+
+    public void SetUpgrade()
+    {
+        var data = CharacterUpgradeData.Instance;
+        maxHP += data.fullHealth;
+        HPRegenPersec += data.healPerSeconds;
+        maxSTM += data.fullStamina;
+        STMRegenPersec += data.staminaPerSeconds;
+        attackPower = attackPower * data.attackMult;
     }
     
 }
