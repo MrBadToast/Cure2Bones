@@ -15,6 +15,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/HitData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" root0="FORCE_HIGHLIGHTING" />
@@ -24,15 +25,18 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/HitboxRotationCorrection.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TestTarget.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgradeData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Single.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Multiple.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
       </list>
     </option>
   </component>
@@ -90,7 +94,9 @@
       <workItem from="1633926731976" duration="3916000" />
       <workItem from="1633934172813" duration="767000" />
       <workItem from="1633951155246" duration="1390000" />
-      <workItem from="1634022549845" duration="4989000" />
+      <workItem from="1634022549845" duration="5324000" />
+      <workItem from="1634034143072" duration="2684000" />
+      <workItem from="1634111399240" duration="7543000" />
     </task>
     <servers />
   </component>

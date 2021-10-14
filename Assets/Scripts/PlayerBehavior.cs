@@ -31,9 +31,9 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private float attackPower;
     [SerializeField] private float attackSTMUse;
     [SerializeField] private float maxHP;
-    [SerializeField] private float HPRegenPersec;
     [SerializeField] private float maxSTM;
     [SerializeField] private float STMRegenPersec;
+    [SerializeField] private float HPRegenPersec;
     //[SerializeField] private float regenerationTime_HP;
     [SerializeField] private float regenerationTime_STM;
     [SerializeField] private float charge_Speed;
@@ -42,6 +42,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private float currentHP;
     private float currentSTM;
+    private float stmRegenCooldownTimer;
 
     public float MAXHp => maxHP;
     public float MAXStm => maxSTM;
@@ -87,9 +88,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         currentHP = maxHP;
         currentSTM = maxSTM;
+        stmRegenCooldownTimer = regenerationTime_STM;
     }
 
     private float chargeCoolDown = 1.0f;
+
     
     private void Update()
     {
@@ -105,31 +108,38 @@ public class PlayerBehavior : MonoBehaviour
 
             case CharacterState.NORMAL:
                 Move(speed);
-                if (IsAttcking && currentSTM > attackSTMUse)
+                if (IsAttcking && currentSTM >= attackSTMUse)
                 {
                     state = CharacterState.ATTACKRUSH;
                     break;
                 }
 
-                if (IsCharging && chargeCoolDown < 0f && currentSTM > charge_STMUse)
+                if (IsCharging && chargeCoolDown < 0f && currentSTM >= charge_STMUse)
                 {
                     state = CharacterState.CHARGE;
+                    currentSTM -= charge_STMUse;
                     
                     var targets = chargeDamageArea.GetTargetsInReach();
                     foreach (var t in targets)
                     {
-                        var h = new HitData((t.transform.position - transform.position).normalized,10.0f, charge_power);
+                        var h = new HitData((t.transform.position - transform.position).normalized,50.0f, charge_power);
                         t.OnHit(h);
                     }
-
+                    
                     chargeCoolDown = 1.0f;
                     chargeTimer = 0.5f;
-                    
+                    stmRegenCooldownTimer = regenerationTime_STM;
                 }
                 break;
             
             case CharacterState.ATTACKRUSH:
-                Move(speed/2);
+                if (currentSTM <= attackSTMUse)
+                {
+                    state = CharacterState.NORMAL;
+                    break;
+                }
+
+                Move(speed/3);
                 PunchRush();
                 if (!IsAttcking)
                     state = CharacterState.NORMAL;
@@ -150,6 +160,18 @@ public class PlayerBehavior : MonoBehaviour
         {
             chargeCoolDown -= Time.deltaTime;
         }
+
+        if (stmRegenCooldownTimer < 0)
+        {
+            currentSTM += STMRegenPersec * Time.deltaTime;
+            if (currentSTM > maxSTM)
+                currentSTM = maxSTM;
+        }
+        else
+        {
+            stmRegenCooldownTimer -= Time.deltaTime;
+        }
+        
     }
 
     public void Move(float _speed)
@@ -198,6 +220,7 @@ public class PlayerBehavior : MonoBehaviour
         }
 
         punchTimer = attackInterval;
+        stmRegenCooldownTimer = regenerationTime_STM;
     }
 
     private float chargeTimer = 0f;
@@ -207,6 +230,7 @@ public class PlayerBehavior : MonoBehaviour
         if (chargeTimer > 0)
         {
             rBody.velocity = transform.forward * charge_Speed;
+            chargeTimer -= Time.deltaTime;
         }
         else
         {

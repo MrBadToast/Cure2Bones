@@ -21,9 +21,9 @@ public class PatientBehavior : TargetObject
     [SerializeField] private float wallDetectRange;
     [SerializeField] private float speed;
     [SerializeField] private float hpToHeal;
+    [SerializeField] private int moneyDrop;
     [SerializeField] private GameObject[] GermObjects;
 
-    
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
     private PatientState state = PatientState.IDLE;
@@ -45,7 +45,8 @@ public class PatientBehavior : TargetObject
 
     public override void OnHit(HitData hitData)
     {
-        rBody.AddForce(hitData._direction * hitData._power);
+        Debug.Log("HIT");
+        rBody.AddForce(hitData._direction * hitData._power,ForceMode.Impulse);
     }
 
     IEnumerator BehaviorRoutine()

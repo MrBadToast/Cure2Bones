@@ -28,8 +28,8 @@ public class GameplayUI : MonoBehaviour
     {
         if(_isplayerNull) return;
         
-        healthText.text = player.CurrentHp.ToString() + " / " + player.MAXHp.ToString();
-        staminaText.text = player.CurrentStm.ToString() + " / " + player.MAXStm.ToString();
+        healthText.text = ((int)player.CurrentHp).ToString() + " / " + player.MAXHp.ToString();
+        staminaText.text = ((int)player.CurrentStm).ToString() + " / " + player.MAXStm.ToString();
         //moneyText.text = ;
         if (player.IsTargetInRange())
         {

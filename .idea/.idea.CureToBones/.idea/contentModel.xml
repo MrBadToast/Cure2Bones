@@ -13,6 +13,9 @@
           <e p="HitData.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
+          <e p="SoundModule_Base.cs" t="Include" />
+          <e p="SoundModule_Multiple.cs" t="Include" />
+          <e p="SoundModule_Single.cs" t="Include" />
           <e p="TargetDamageArea.cs" t="Include" />
           <e p="TargetObject.cs" t="Include" />
           <e p="TestTarget.cs" t="Include" />
