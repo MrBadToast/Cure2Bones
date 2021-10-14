@@ -43,11 +43,14 @@ public class PlayerBehavior : MonoBehaviour
     private float currentHP;
     private float currentSTM;
     private float stmRegenCooldownTimer;
+    private float money;
 
     public float MAXHp => maxHP;
     public float MAXStm => maxSTM;
     public float CurrentHp => currentHP;
     public float CurrentStm => currentSTM;
+
+    public float Money => money;
 
 
     public enum CharacterState
@@ -122,7 +125,7 @@ public class PlayerBehavior : MonoBehaviour
                     var targets = chargeDamageArea.GetTargetsInReach();
                     foreach (var t in targets)
                     {
-                        var h = new HitData((t.transform.position - transform.position).normalized,50.0f, charge_power);
+                        var h = new HitData((t.transform.position - transform.position).normalized,50.0f,charge_power,3f);
                         t.OnHit(h);
                     }
                     
@@ -215,7 +218,7 @@ public class PlayerBehavior : MonoBehaviour
         foreach (var t in targets)
         {
            // Instantiate(effectOnHit, t.transform.position, quaternion.identity);
-           var h = new HitData((t.transform.position - transform.position).normalized,20.0f, attackPower);
+           var h = new HitData((t.transform.position - transform.position).normalized,20.0f,attackPower,0.25f);
            t.OnHit(h);
         }
 
@@ -252,6 +255,24 @@ public class PlayerBehavior : MonoBehaviour
         STMRegenPersec += data.staminaPerSeconds;
         attackPower = attackPower * data.attackMult;
     }
+
+    public void GetMoney(int value)
+    {
+        money += value;
+    }
     
+    public bool UseMoney(int value)
+    {
+        if (value > money)
+        {
+            money -= value;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+ 
 }
 

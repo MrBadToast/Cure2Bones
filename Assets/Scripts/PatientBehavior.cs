@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public enum PatientState
 {
+    DISABLED,
     IDLE,
     ROAM,
     CHASE,
@@ -28,6 +29,7 @@ public class PatientBehavior : TargetObject
     private Rigidbody rBody;
     private PatientState state = PatientState.IDLE;
 
+    private float healProgress = 0f;
     private float behaviorTimer;
 
     private void Awake()
@@ -45,8 +47,10 @@ public class PatientBehavior : TargetObject
 
     public override void OnHit(HitData hitData)
     {
-        Debug.Log("HIT");
-        rBody.AddForce(hitData._direction * hitData._power,ForceMode.Impulse);
+        state = PatientState.PINNED;
+        behaviorTimer = hitData._stiffTime;
+        Debug.Log(behaviorTimer);
+        //rBody.AddForce(hitData._direction * hitData._power,ForceMode.Impulse);
     }
 
     IEnumerator BehaviorRoutine()
@@ -89,6 +93,7 @@ public class PatientBehavior : TargetObject
                     
                     rBody.AddForce(transform.forward * speed,ForceMode.Force);
                     behaviorTimer -= Time.deltaTime;
+                    
                     if (behaviorTimer <= 0)
                     {
                         if (Random.Range(0, 1) == 0)
@@ -110,6 +115,7 @@ public class PatientBehavior : TargetObject
                     rBody.AddForce(transform.forward * speed,ForceMode.Force);
                     
                     behaviorTimer -= Time.deltaTime;
+                    
                     if (behaviorTimer < 0)
                     {
                         if (PlayerDetected())
@@ -122,6 +128,13 @@ public class PatientBehavior : TargetObject
                     break;
                 
                 case PatientState.PINNED:
+                    rBody.velocity = Vector3.zero;
+                    if (behaviorTimer < 0)
+                    {
+                        state = PatientState.IDLE;
+                    }
+                    behaviorTimer -= Time.deltaTime;
+                    yield return null;
                     break;
             }
         }
@@ -145,6 +158,35 @@ public class PatientBehavior : TargetObject
         transform.rotation = quaternion.LookRotation(dir,Vector3.up);
     }
 
+    public void GetHealed(float value)
+    {
+        if (value + healProgress >= hpToHeal)
+        {
+            HealComplete();
+            return;
+        }
+
+        healProgress += value;
+
+    }
+    
+    public void HealComplete()
+    {
+        PlayerBehavior.Instance.GetMoney(moneyDrop);
+        
+        foreach (var obj in GermObjects)
+        {
+            var germ = Instantiate(obj, transform.position, transform.rotation);
+            Rigidbody germ_rb;
+            if (germ.TryGetComponent(out germ_rb))
+            {
+                germ_rb.velocity =
+                    -(transform.forward + new Vector3(Random.Range(0f, 1f), 0f, Random.Range(0f, 1f)) * 20f);
+            }
+        }
+        Destroy(this);
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position,playerDetectRange);
