@@ -22,15 +22,17 @@ public class GameplayUI : MonoBehaviour
     {
         player = PlayerBehavior.Instance;
         _isplayerNull = player == null;
+       // player.propertiesChanged += OnUpdateUI;
     }
-
-    private void Update()
+    
+    private void FixedUpdate()
     {
         if(_isplayerNull) return;
         
         healthText.text = ((int)player.CurrentHp).ToString() + " / " + player.MAXHp.ToString();
         staminaText.text = ((int)player.CurrentStm).ToString() + " / " + player.MAXStm.ToString();
-        //moneyText.text = ;
+        moneyText.text = (player.Money).ToString() + " $ ";
+        
         if (player.IsTargetInRange())
         {
             Crosshair.sprite = CrosshairActive;
@@ -41,5 +43,16 @@ public class GameplayUI : MonoBehaviour
         }
         
     }
+    
+    // private void OnUpdateUI()
+    // {
+    //     healthText.text = ((int)player.CurrentHp).ToString() + " / " + player.MAXHp.ToString();
+    //     staminaText.text = ((int)player.CurrentStm).ToString() + " / " + player.MAXStm.ToString();
+    //     moneyText.text = (player.Money).ToString() + " $ ";
+    //     if (player.IsTargetInRange())
+    //         Crosshair.sprite = CrosshairActive;
+    //     else
+    //         Crosshair.sprite = CrosshairDeactive;
+    // }
     
 }

@@ -25,7 +25,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Scripts/HitboxRotationCorrection.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TestTarget.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgradeData.cs" />
@@ -33,10 +32,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Single.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Multiple.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/StageManager.cs" />
       </list>
     </option>
   </component>
@@ -98,7 +99,8 @@
       <workItem from="1634034143072" duration="2684000" />
       <workItem from="1634111399240" duration="7543000" />
       <workItem from="1634207313327" duration="2453000" />
-      <workItem from="1634210524915" duration="4436000" />
+      <workItem from="1634210524915" duration="4551000" />
+      <workItem from="1634313150550" duration="3954000" />
     </task>
     <servers />
   </component>
@@ -127,9 +129,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="377" y="0" width="1337" height="1028" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634032458954" />
-    <state x="2536" y="240" key="run.anything.popup" timestamp="1633930021415">
+    <state x="2536" y="240" key="run.anything.popup" timestamp="1634313352166">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1633930021415" />
+    <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634313352166" />
   </component>
 </project>

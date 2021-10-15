@@ -52,6 +52,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public float Money => money;
 
+    public delegate void ONPlayerPropertiesChanged();
+    public ONPlayerPropertiesChanged propertiesChanged;
 
     public enum CharacterState
     {
@@ -62,7 +64,7 @@ public class PlayerBehavior : MonoBehaviour
         GRAPPLE
     }
 
-    public CharacterState state = CharacterState.NORMAL;
+    private CharacterState state = CharacterState.DISABLE;
     private PlayerControl playerControl;
     private bool disableControls = false;
     
@@ -89,6 +91,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
+        StageManager.Instance.onGameStarted += EnableCharacter;
+        
         currentHP = maxHP;
         currentSTM = maxSTM;
         stmRegenCooldownTimer = regenerationTime_STM;
@@ -272,6 +276,11 @@ public class PlayerBehavior : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void EnableCharacter()
+    {
+        state = CharacterState.NORMAL;
     }
  
 }

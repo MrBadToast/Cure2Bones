@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -27,7 +28,7 @@ public class PatientBehavior : TargetObject
 
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
-    private PatientState state = PatientState.IDLE;
+    private PatientState state = PatientState.DISABLED;
 
     private float healProgress = 0f;
     private float behaviorTimer;
@@ -37,20 +38,26 @@ public class PatientBehavior : TargetObject
         rBody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
+        
         if (PlayerBehavior.Instance != null)
             targetPlayer = PlayerBehavior.Instance;
         
         StartCoroutine(BehaviorRoutine());
     }
-
     public override void OnHit(HitData hitData)
     {
         state = PatientState.PINNED;
         behaviorTimer = hitData._stiffTime;
         Debug.Log(behaviorTimer);
         //rBody.AddForce(hitData._direction * hitData._power,ForceMode.Impulse);
+    }
+
+    public override void GameStarted()
+    {
+        state = PatientState.IDLE;
     }
 
     IEnumerator BehaviorRoutine()
@@ -61,6 +68,9 @@ public class PatientBehavior : TargetObject
         {
             switch (state)
             {
+                case PatientState.DISABLED:
+                    yield return null;
+                    break;
                 case PatientState.IDLE:
                     if (PlayerDetected())
                     {
@@ -184,6 +194,7 @@ public class PatientBehavior : TargetObject
                     -(transform.forward + new Vector3(Random.Range(0f, 1f), 0f, Random.Range(0f, 1f)) * 20f);
             }
         }
+        StageManager.Instance.RemoveEnemyObject(gameObject);
         Destroy(this);
     }
     
