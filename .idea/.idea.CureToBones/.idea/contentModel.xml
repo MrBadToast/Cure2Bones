@@ -50,7 +50,9 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CharacterUpgradeData.cs" t="Include" />
+          <e p="EnemyBehavior.cs" t="Include" />
           <e p="GameplayUI.cs" t="Include" />
+          <e p="GameStartSequence.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />

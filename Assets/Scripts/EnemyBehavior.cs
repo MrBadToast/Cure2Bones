@@ -7,30 +7,20 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
-public enum PatientState
-{
-    DISABLED,
-    IDLE,
-    ROAM,
-    CHASE,
-    PINNED
-}
-
-public class PatientBehavior : TargetObject
+public class EnemyBehavior : TargetObject
 {
     [SerializeField] private AttackType type = AttackType.NORMAL;
     [SerializeField] private float playerDetectRange;
     [SerializeField] private float wallDetectRange;
     [SerializeField] private float speed;
-    [SerializeField] private float hpToHeal;
-    [SerializeField] private int moneyDrop;
-    [SerializeField] private GameObject[] GermObjects;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float damageToPlayer;
 
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
     private PatientState state = PatientState.DISABLED;
 
-    private float healProgress = 0f;
+    private float currentHealth;
     private float behaviorTimer;
 
     private void Awake()
@@ -41,14 +31,17 @@ public class PatientBehavior : TargetObject
     public override void Start()
     {
         base.Start();
-        
+
         if (PlayerBehavior.Instance != null)
             targetPlayer = PlayerBehavior.Instance;
-        
+
+        currentHealth = maxHealth;
         StartCoroutine(BehaviorRoutine());
     }
+
     public override void OnHit(HitData hitData)
     {
+        GetDamage(hitData._dealtDamage);
         state = PatientState.PINNED;
         behaviorTimer = hitData._stiffTime;
     }
@@ -58,10 +51,19 @@ public class PatientBehavior : TargetObject
         state = PatientState.IDLE;
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            targetPlayer.GetDamage(damageToPlayer);
+        }
+    }
+
+
     IEnumerator BehaviorRoutine()
     {
         behaviorTimer = 2.0f;
-        
+
         while (true)
         {
             switch (state)
@@ -81,16 +83,17 @@ public class PatientBehavior : TargetObject
                     if (behaviorTimer <= 0)
                     {
                         if (Random.Range(0, 2) == 0)
-                            behaviorTimer = Random.Range(0.5f,5.0f);
+                            behaviorTimer = Random.Range(0.5f, 5.0f);
                         else
                         {
                             headToRandomForward();
                             state = PatientState.ROAM;
                         }
                     }
+
                     yield return null;
                     break;
-                
+
                 case PatientState.ROAM:
                     if (PlayerDetected())
                     {
@@ -98,15 +101,15 @@ public class PatientBehavior : TargetObject
                         behaviorTimer = 5.0f;
                         break;
                     }
-                    
-                    rBody.AddForce(transform.forward * speed,ForceMode.Force);
+
+                    rBody.AddForce(transform.forward * speed, ForceMode.Force);
                     behaviorTimer -= Time.deltaTime;
-                    
+
                     if (behaviorTimer <= 0)
                     {
                         if (Random.Range(0, 1) == 0)
                         {
-                            behaviorTimer = Random.Range(0.5f,5.0f);
+                            behaviorTimer = Random.Range(0.5f, 5.0f);
                             headToRandomForward();
                         }
                         else
@@ -114,16 +117,17 @@ public class PatientBehavior : TargetObject
                             state = PatientState.IDLE;
                         }
                     }
+
                     yield return null;
                     break;
-                    
+
                 case PatientState.CHASE:
 
                     transform.forward = (targetPlayer.transform.position - transform.position).normalized;
-                    rBody.AddForce(transform.forward * speed,ForceMode.Force);
-                    
+                    rBody.AddForce(transform.forward * speed, ForceMode.Force);
+
                     behaviorTimer -= Time.deltaTime;
-                    
+
                     if (behaviorTimer < 0)
                     {
                         if (PlayerDetected())
@@ -134,13 +138,14 @@ public class PatientBehavior : TargetObject
 
                     yield return null;
                     break;
-                
+
                 case PatientState.PINNED:
                     rBody.velocity = Vector3.zero;
                     if (behaviorTimer < 0)
                     {
                         state = PatientState.IDLE;
                     }
+
                     behaviorTimer -= Time.deltaTime;
                     yield return null;
                     break;
@@ -163,42 +168,33 @@ public class PatientBehavior : TargetObject
             dir = new Vector3(dir_v2.x, 0f, dir_v2.y);
         }
 
-        transform.rotation = quaternion.LookRotation(dir,Vector3.up);
+        transform.rotation = quaternion.LookRotation(dir, Vector3.up);
     }
 
-    public void GetHealed(float value)
+    public void GetDamage(float value)
     {
-        if (value + healProgress >= hpToHeal)
+        if (value > currentHealth)
         {
-            HealComplete();
+            currentHealth = 0f;
+            Kill();
             return;
         }
 
-        healProgress += value;
+        currentHealth -= value;
 
     }
-    
-    public void HealComplete()
+
+    public void Kill()
     {
-        PlayerBehavior.Instance.GetMoney(moneyDrop);
-        
-        foreach (var obj in GermObjects)
-        {
-            var germ = Instantiate(obj, transform.position, transform.rotation);
-            Rigidbody germ_rb;
-            if (germ.TryGetComponent(out germ_rb))
-            {
-                germ_rb.velocity =
-                    -(transform.forward + new Vector3(Random.Range(0f, 1f), 0f, Random.Range(0f, 1f)) * 20f);
-            }
-        }
         StageManager.Instance.RemoveEnemyObject(gameObject);
         Destroy(gameObject);
     }
-    
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position,playerDetectRange);
-        Gizmos.DrawLine(transform.position,transform.position + transform.forward * wallDetectRange);
+        Gizmos.DrawWireSphere(transform.position, playerDetectRange);
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * wallDetectRange);
     }
+    
+    
 }

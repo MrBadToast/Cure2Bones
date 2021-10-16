@@ -44,6 +44,7 @@ public class PlayerBehavior : MonoBehaviour
     private float currentSTM;
     private float stmRegenCooldownTimer;
     private float money;
+    private float DamageTimer;
 
     public float MAXHp => maxHP;
     public float MAXStm => maxSTM;
@@ -178,7 +179,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             stmRegenCooldownTimer -= Time.deltaTime;
         }
-        
+
+        DamageTimer -= Time.deltaTime;
     }
 
     public void Move(float _speed)
@@ -221,6 +223,7 @@ public class PlayerBehavior : MonoBehaviour
         var targets = rushDamageArea.GetTargetsInReach();
         foreach (var t in targets)
         {
+            if (!t) break;
            // Instantiate(effectOnHit, t.transform.position, quaternion.identity);
            var h = new HitData((t.transform.position - transform.position).normalized,20.0f,attackPower,0.25f);
            t.OnHit(h);
@@ -278,6 +281,26 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    public void GetDamage(float amount)
+    {
+        if (DamageTimer > 0) return;
+        
+        if (currentHP < amount)
+        {
+            currentHP = 0f;
+            OnHealthDepleted();
+            return;
+        }
+
+        currentHP -= amount;
+        DamageTimer = 1.0f;
+    }
+
+    public void OnHealthDepleted()
+    {
+        
+    }
+    
     public void EnableCharacter()
     {
         state = CharacterState.NORMAL;
