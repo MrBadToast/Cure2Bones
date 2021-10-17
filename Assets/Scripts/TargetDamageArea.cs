@@ -48,5 +48,15 @@ public class TargetDamageArea : MonoBehaviour
             }
         }
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (targetsInReach.Count == 0) return;
+        
+        foreach (var t in targetsInReach)
+        {
+            if (!t) targetsInReach.Remove(t);
+            return;
+        }
+    }
 }

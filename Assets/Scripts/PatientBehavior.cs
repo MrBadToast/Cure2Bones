@@ -51,6 +51,7 @@ public class PatientBehavior : TargetObject
     {
         state = PatientState.PINNED;
         behaviorTimer = hitData._stiffTime;
+        GetHealed(hitData._dealtDamage);
     }
 
     public override void GameStarted()
@@ -173,9 +174,7 @@ public class PatientBehavior : TargetObject
             HealComplete();
             return;
         }
-
         healProgress += value;
-
     }
     
     public void HealComplete()

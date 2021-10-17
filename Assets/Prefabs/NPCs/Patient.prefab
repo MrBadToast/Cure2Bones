@@ -130,5 +130,6 @@ MonoBehaviour:
   playerDetectRange: 10
   wallDetectRange: 10
   speed: 5
-  hpToHeal: 0
+  hpToHeal: 50
+  moneyDrop: 50
   GermObjects: []

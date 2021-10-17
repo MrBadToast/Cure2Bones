@@ -63,6 +63,7 @@
           <e p="TargetDamageArea.cs" t="Include" />
           <e p="TargetObject.cs" t="Include" />
           <e p="TestTarget.cs" t="Include" />
+          <e p="TitleSceneControl.cs" t="Include" />
         </e>
         <e p="Settings" t="Include">
           <e p="PlayerControl.cs" t="Include" />
