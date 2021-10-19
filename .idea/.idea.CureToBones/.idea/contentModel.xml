@@ -47,57 +47,15 @@
             </e>
             <e p="readme_DOTweenPro.txt" t="Include" />
           </e>
-          <e p="Sirenix" t="Include">
-            <e p="Assemblies" t="Include">
-              <e p="link.xml" t="Include" />
-              <e p="Sirenix.OdinInspector.Attributes.xml" t="Include" />
-              <e p="Sirenix.OdinInspector.Editor.xml" t="Include" />
-              <e p="Sirenix.Serialization.Config.xml" t="Include" />
-              <e p="Sirenix.Serialization.xml" t="Include" />
-              <e p="Sirenix.Utilities.Editor.xml" t="Include" />
-              <e p="Sirenix.Utilities.xml" t="Include" />
-            </e>
-            <e p="Odin Inspector" t="Include">
-              <e p="Modules" t="Include">
-                <e p="Unity.Mathematics" t="Include">
-                  <e p="manifest.txt" t="Include" />
-                  <e p="MathematicsDrawers.cs" t="Include" />
-                  <e p="Sirenix.OdinInspector.Modules.UnityMathematics.asmdef" t="Include" />
-                </e>
-              </e>
-              <e p="Scripts" t="Include">
-                <e p="Editor" t="Include">
-                  <e p="AssemblyImportSettingsAutomation.cs" t="Include" />
-                  <e p="BuildAOTAutomation.cs" t="Include" />
-                  <e p="EnsureOdinInspectorDefine.cs" t="Include" />
-                  <e p="FixBrokenUnityObjectWrapperDrawer.cs" t="Include" />
-                  <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.asmdef" t="Include" />
-                  <e p="SyncListDrawer.cs" t="Include" />
-                  <e p="SyncVarAttributeDrawer.cs" t="Include" />
-                  <e p="Vector2IntMinMaxAttributeDrawer.cs" t="Include" />
-                  <e p="VectorIntDrawers.cs" t="Include" />
-                  <e p="VectorIntPropertyResolvers.cs" t="Include" />
-                </e>
-                <e p="SerializedNetworkBehaviour.cs" t="Include" />
-                <e p="Sirenix.OdinInspector.CompatibilityLayer.asmdef" t="Include" />
-                <e p="VectorIntFormatters.cs" t="Include" />
-              </e>
-            </e>
-            <e p="readme.txt" t="Include" />
-          </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="Billboard.cs" t="Include" />
           <e p="CharacterUpgradeData.cs" t="Include" />
-          <e p="ChargeDamageArea.cs" t="Include" />
           <e p="EnemyBehavior.cs" t="Include" />
           <e p="GameplayUI.cs" t="Include" />
           <e p="GameStartSequence.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
-          <e p="QuickQuit.cs" t="Include" />
-          <e p="SelfDestruct.cs" t="Include" />
           <e p="SoundModule_Base.cs" t="Include" />
           <e p="SoundModule_Multiple.cs" t="Include" />
           <e p="SoundModule_Single.cs" t="Include" />
@@ -197,9 +155,6 @@
       <e p="CureToBones.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Sirenix.OdinInspector.CompatibilityLayer.csproj" t="IncludeRecursive" />
-      <e p="Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj" t="IncludeRecursive" />
-      <e p="Sirenix.OdinInspector.Modules.UnityMathematics.csproj" t="IncludeRecursive" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
   </component>

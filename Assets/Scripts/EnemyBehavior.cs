@@ -15,21 +15,17 @@ public class EnemyBehavior : TargetObject
     [SerializeField] private float speed;
     [SerializeField] private float maxHealth;
     [SerializeField] private float damageToPlayer;
-    [SerializeField] private GameObject deathEffectObject;
 
-    private SoundModule_Base sound;
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
-    [SerializeField]private NPCState state = NPCState.DISABLED;
+    private PatientState state = PatientState.DISABLED;
 
     private float currentHealth;
     private float behaviorTimer;
 
-
     private void Awake()
     {
         rBody = GetComponent<Rigidbody>();
-        sound = GetComponent<SoundModule_Base>();
     }
 
     public override void Start()
@@ -45,21 +41,19 @@ public class EnemyBehavior : TargetObject
 
     public override void OnHit(HitData hitData)
     {
-        if (state == NPCState.DISABLED) return;
-        state = NPCState.PINNED;
-        GetDamage(hitData);
+        GetDamage(hitData._dealtDamage);
+        state = PatientState.PINNED;
         behaviorTimer = hitData._stiffTime;
     }
 
     public override void GameStarted()
     {
-        state = NPCState.IDLE;
+        state = PatientState.IDLE;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (state == NPCState.DISABLED) return;
-        if (other.gameObject.tag == "Player" && state != NPCState.PINNED)
+        if (other.gameObject.tag == "Player")
         {
             targetPlayer.GetDamage(damageToPlayer);
         }
@@ -74,14 +68,13 @@ public class EnemyBehavior : TargetObject
         {
             switch (state)
             {
-                case NPCState.DISABLED:
+                case PatientState.DISABLED:
                     yield return null;
                     break;
-                
-                case NPCState.IDLE:
+                case PatientState.IDLE:
                     if (PlayerDetected())
                     {
-                        state = NPCState.CHASE;
+                        state = PatientState.CHASE;
                         behaviorTimer = 5.0f;
                         break;
                     }
@@ -94,17 +87,17 @@ public class EnemyBehavior : TargetObject
                         else
                         {
                             headToRandomForward();
-                            state = NPCState.ROAM;
+                            state = PatientState.ROAM;
                         }
                     }
 
                     yield return null;
                     break;
 
-                case NPCState.ROAM:
+                case PatientState.ROAM:
                     if (PlayerDetected())
                     {
-                        state = NPCState.CHASE;
+                        state = PatientState.CHASE;
                         behaviorTimer = 5.0f;
                         break;
                     }
@@ -121,17 +114,16 @@ public class EnemyBehavior : TargetObject
                         }
                         else
                         {
-                            state = NPCState.IDLE;
+                            state = PatientState.IDLE;
                         }
                     }
 
                     yield return null;
                     break;
 
-                case NPCState.CHASE:
+                case PatientState.CHASE:
 
-                    Vector3 f = (targetPlayer.transform.position - transform.position).normalized;
-                    transform.forward = new Vector3(f.x,0f,f.z);
+                    transform.forward = (targetPlayer.transform.position - transform.position).normalized;
                     rBody.AddForce(transform.forward * speed, ForceMode.Force);
 
                     behaviorTimer -= Time.deltaTime;
@@ -147,11 +139,11 @@ public class EnemyBehavior : TargetObject
                     yield return null;
                     break;
 
-                case NPCState.PINNED:
+                case PatientState.PINNED:
                     rBody.velocity = Vector3.zero;
                     if (behaviorTimer < 0)
                     {
-                        state = NPCState.IDLE;
+                        state = PatientState.IDLE;
                     }
 
                     behaviorTimer -= Time.deltaTime;
@@ -179,29 +171,23 @@ public class EnemyBehavior : TargetObject
         transform.rotation = quaternion.LookRotation(dir, Vector3.up);
     }
 
-    public void GetDamage(HitData hit)
+    public void GetDamage(float value)
     {
-        if ( hit._dealtDamage > currentHealth)
+        if (value > currentHealth)
         {
             currentHealth = 0f;
-            Kill(hit);
+            Kill();
             return;
         }
 
-        currentHealth -= hit._dealtDamage;
+        currentHealth -= value;
 
     }
 
-    public void Kill(HitData hit)
+    public void Kill()
     {
-        state = NPCState.DISABLED;
-        Instantiate(deathEffectObject, transform.position, quaternion.identity);
-        rBody.constraints = RigidbodyConstraints.None;
-        rBody.drag = 0f;
-        rBody.AddForce((hit._direction + Vector3.up)*100f,ForceMode.Impulse);
-        rBody.AddTorque(Random.insideUnitSphere * 50f);
-        StartCoroutine(DelayedDestroy());
-
+        StageManager.Instance.RemoveEnemyObject(gameObject);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
@@ -209,12 +195,6 @@ public class EnemyBehavior : TargetObject
         Gizmos.DrawWireSphere(transform.position, playerDetectRange);
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * wallDetectRange);
     }
-
-    IEnumerator DelayedDestroy()
-    {
-        yield return new WaitForSeconds(1f);
-        StageManager.Instance.RemoveEnemyObject(gameObject);
-        Destroy(gameObject);
-    }
+    
     
 }

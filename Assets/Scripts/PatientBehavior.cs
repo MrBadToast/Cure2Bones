@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
-public enum NPCState
+public enum PatientState
 {
     DISABLED,
     IDLE,
@@ -24,12 +24,11 @@ public class PatientBehavior : TargetObject
     [SerializeField] private float speed;
     [SerializeField] private float hpToHeal;
     [SerializeField] private int moneyDrop;
-    [SerializeField] private GameObject FinalHitEffectObject;
     [SerializeField] private GameObject[] GermObjects;
 
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
-    private NPCState state = NPCState.DISABLED;
+    private PatientState state = PatientState.DISABLED;
 
     private float healProgress = 0f;
     private float behaviorTimer;
@@ -50,14 +49,14 @@ public class PatientBehavior : TargetObject
     }
     public override void OnHit(HitData hitData)
     {
-        state = NPCState.PINNED;
+        state = PatientState.PINNED;
         behaviorTimer = hitData._stiffTime;
-        GetHealed(hitData);
+        GetHealed(hitData._dealtDamage);
     }
 
     public override void GameStarted()
     {
-        state = NPCState.IDLE;
+        state = PatientState.IDLE;
     }
 
     IEnumerator BehaviorRoutine()
@@ -68,13 +67,13 @@ public class PatientBehavior : TargetObject
         {
             switch (state)
             {
-                case NPCState.DISABLED:
+                case PatientState.DISABLED:
                     yield return null;
                     break;
-                case NPCState.IDLE:
+                case PatientState.IDLE:
                     if (PlayerDetected())
                     {
-                        state = NPCState.CHASE;
+                        state = PatientState.CHASE;
                         behaviorTimer = 5.0f;
                         break;
                     }
@@ -87,16 +86,16 @@ public class PatientBehavior : TargetObject
                         else
                         {
                             headToRandomForward();
-                            state = NPCState.ROAM;
+                            state = PatientState.ROAM;
                         }
                     }
                     yield return null;
                     break;
                 
-                case NPCState.ROAM:
+                case PatientState.ROAM:
                     if (PlayerDetected())
                     {
-                        state = NPCState.CHASE;
+                        state = PatientState.CHASE;
                         behaviorTimer = 5.0f;
                         break;
                     }
@@ -113,13 +112,13 @@ public class PatientBehavior : TargetObject
                         }
                         else
                         {
-                            state = NPCState.IDLE;
+                            state = PatientState.IDLE;
                         }
                     }
                     yield return null;
                     break;
                     
-                case NPCState.CHASE:
+                case PatientState.CHASE:
 
                     transform.forward = (targetPlayer.transform.position - transform.position).normalized;
                     rBody.AddForce(transform.forward * speed,ForceMode.Force);
@@ -137,11 +136,11 @@ public class PatientBehavior : TargetObject
                     yield return null;
                     break;
                 
-                case NPCState.PINNED:
+                case PatientState.PINNED:
                     rBody.velocity = Vector3.zero;
                     if (behaviorTimer < 0)
                     {
-                        state = NPCState.IDLE;
+                        state = PatientState.IDLE;
                     }
                     behaviorTimer -= Time.deltaTime;
                     yield return null;
@@ -168,35 +167,30 @@ public class PatientBehavior : TargetObject
         transform.rotation = quaternion.LookRotation(dir,Vector3.up);
     }
 
-    public void GetHealed(HitData hit)
+    public void GetHealed(float value)
     {
-        if (hit._dealtDamage + healProgress >= hpToHeal)
+        if (value + healProgress >= hpToHeal)
         {
-            HealComplete(hit);
+            HealComplete();
             return;
         }
-        healProgress += hit._dealtDamage;
+        healProgress += value;
     }
     
-    public void HealComplete(HitData hit)
+    public void HealComplete()
     {
         PlayerBehavior.Instance.GetMoney(moneyDrop);
         
         foreach (var obj in GermObjects)
         {
-            if (!obj) break;
-            
             var germ = Instantiate(obj, transform.position, transform.rotation);
             Rigidbody germ_rb;
             if (germ.TryGetComponent(out germ_rb))
             {
-                germ_rb.AddForce(
-                    (hit._direction + Vector3.Cross(hit._direction,Vector3.up) * Random.Range(-1f,1f)) * 100f, ForceMode.Impulse);
+                germ_rb.velocity =
+                    -(transform.forward + new Vector3(Random.Range(0f, 1f), 0f, Random.Range(0f, 1f)) * 20f);
             }
-            germ.GetComponent<EnemyBehavior>().GameStarted();
         }
-
-        Instantiate(FinalHitEffectObject, transform.position, quaternion.identity);
         StageManager.Instance.RemoveEnemyObject(gameObject);
         Destroy(gameObject);
     }

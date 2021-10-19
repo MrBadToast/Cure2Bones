@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class SoundModule_Single : SoundModule_Base
 {
-    [SerializeField, Sirenix.OdinInspector.Title("SoundClips")]
-    Dictionary<string,AudioClip> sound;
+    [Header("SoundClips")]
+    [SerializeField] Dictionary<string,AudioClip> sound;
 
     public override void Play(string soundKey)
     {

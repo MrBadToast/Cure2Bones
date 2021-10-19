@@ -43,11 +43,6 @@ public class GameplayUI : MonoBehaviour
         }
         
     }
-
-    public void CharacterStaminaAlert()
-    {
-        
-    }
     
     // private void OnUpdateUI()
     // {
