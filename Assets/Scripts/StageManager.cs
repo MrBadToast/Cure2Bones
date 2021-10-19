@@ -39,6 +39,9 @@ public class StageManager : MonoBehaviour
     {
         timer = timeLimit;
         if (Debugmode) StartCoroutine(DebugStart());
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
