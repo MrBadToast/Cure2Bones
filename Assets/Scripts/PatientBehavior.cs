@@ -26,6 +26,8 @@ public class PatientBehavior : TargetObject
     [SerializeField] private int moneyDrop;
     [SerializeField] private GameObject FinalHitEffectObject;
     [SerializeField] private GameObject[] GermObjects;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite curedSprite;
 
     private PlayerBehavior targetPlayer;
     private Rigidbody rBody;
@@ -50,6 +52,7 @@ public class PatientBehavior : TargetObject
     }
     public override void OnHit(HitData hitData)
     {
+        if (state == NPCState.DISABLED) return;
         state = NPCState.PINNED;
         behaviorTimer = hitData._stiffTime;
         GetHealed(hitData);
@@ -181,6 +184,10 @@ public class PatientBehavior : TargetObject
     public void HealComplete(HitData hit)
     {
         PlayerBehavior.Instance.GetMoney(moneyDrop);
+        spriteRenderer.sprite = curedSprite;
+        state = NPCState.DISABLED;
+        
+        rBody.AddForce(hit._direction * 50f, ForceMode.Impulse);
         
         foreach (var obj in GermObjects)
         {
@@ -197,13 +204,20 @@ public class PatientBehavior : TargetObject
         }
 
         Instantiate(FinalHitEffectObject, transform.position, quaternion.identity);
-        StageManager.Instance.RemoveEnemyObject(gameObject);
-        Destroy(gameObject);
+        StartCoroutine(DelayedDestroy());
+
     }
     
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position,playerDetectRange);
         Gizmos.DrawLine(transform.position,transform.position + transform.forward * wallDetectRange);
+    }
+
+    IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(1.0f);
+        StageManager.Instance.RemoveEnemyObject(gameObject);
+        Destroy(gameObject);
     }
 }

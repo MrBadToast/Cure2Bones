@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,6 +12,8 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI staminaText;
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private Image Crosshair;
+    [SerializeField] private GameObject clearAnim;
+    [SerializeField] private GameObject interacton;
     [Space(20)] 
     [SerializeField] private Sprite CrosshairActive;
     [SerializeField] private Sprite CrosshairDeactive;
@@ -41,9 +44,28 @@ public class GameplayUI : MonoBehaviour
         {
             Crosshair.sprite = CrosshairDeactive;
         }
-        
+
+        InteractableOn(player.IsHeadingInteractables());
+
     }
 
+    public void OnClear()
+    {
+        clearAnim.GetComponent<DOTweenAnimation>().DOPlayAllById("CLEAR");
+    }
+
+    public void InteractableOn(bool value)
+    {
+        if (value)
+        {
+            interacton.SetActive(true);
+        }
+        else
+        {
+            interacton.SetActive(false);
+        }
+    }
+    
     public void CharacterStaminaAlert()
     {
         

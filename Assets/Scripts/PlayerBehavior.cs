@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerBehavior : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class PlayerBehavior : MonoBehaviour
     private PlayerInput playerInput;
     private SoundModule_Base sound;
     private Animator animator;
+    private CharacterUpgradeData _upgradeData;
     [SerializeField] private GameObject modelGO;
     [SerializeField] private Transform footRCO;
     [SerializeField] private TargetDamageArea rushDamageArea;
@@ -54,14 +54,15 @@ public class PlayerBehavior : MonoBehaviour
 
     private bool isInvincible = false;
 
-    public float MAXHp => maxHP;
-    public float MAXStm => maxSTM;
+    public float MAXHp => maxHP + _upgradeData.GetValue("FULL_HEALTH");
+    public float MAXStm => maxSTM + _upgradeData.GetValue("FULL_STAMINA");
+    public float HealPerSeconds => HPRegenPersec + _upgradeData.GetValue("HEAL_PER_SECONDS");
+    public float StaminaPerSeconds => STMRegenPersec + _upgradeData.GetValue("STAMINA_PER_SECONDS");
+    public float Speed => speed + _upgradeData.GetValue("MOVE_SPEED");
     public float CurrentHp => currentHP;
     public float CurrentStm => currentSTM;
     public float Money => money;
-
-    public float AttackPower => attackPower;
-
+    public float AttackPower => attackPower * _upgradeData.GetValue("MULT_ATTACK");
     public float ChargePower => charge_power;
 
     public enum CharacterState
@@ -94,7 +95,7 @@ public class PlayerBehavior : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         sound = GetComponent<SoundModule_Base>();
         animator = GetComponent<Animator>();
-        
+
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
         playerControl.Player.jump.started += Jump;
@@ -102,30 +103,32 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
+        _upgradeData = CharacterUpgradeData.Instance;
+        Debug.Log(_upgradeData.Debug_DataKeys());
         StageManager.Instance.onGameStarted += EnableCharacter;
-        
-        currentHP = maxHP;
-        currentSTM = maxSTM;
-        stmRegenCooldownTimer = regenerationTime_STM;
+
+        currentHP = MAXHp;
+        currentSTM = MAXStm;
+        stmRegenCooldownTimer = StaminaPerSeconds;
     }
 
     private float chargeCoolDown = 1.0f;
     private float walksoundTimer = 0.5f;
-    
+
     private void FixedUpdate()
     {
         var IsAttcking = playerControl.Player.attack.phase == InputActionPhase.Started;
         var IsCharging = playerControl.Player.charge.phase == InputActionPhase.Started;
 
         chargeCoolDown -= Time.time;
-        
+
         switch (state)
         {
             case CharacterState.DISABLE:
                 break;
 
             case CharacterState.NORMAL:
-                Move(speed);
+                Move(Speed);
                 if (IsAttcking && currentSTM >= attackSTMUse)
                 {
                     state = CharacterState.ATTACKRUSH;
@@ -134,10 +137,10 @@ public class PlayerBehavior : MonoBehaviour
 
                 if (IsCharging && chargeCoolDown < 0f && currentSTM >= charge_STMUse)
                 {
-                    
                     sound.Play("charge");
+                    animator.Play("DASH");
                     SpeedLineEffect.Play();
-                    
+
                     state = CharacterState.CHARGE;
                     currentSTM -= charge_STMUse;
 
@@ -145,8 +148,9 @@ public class PlayerBehavior : MonoBehaviour
                     chargeTimer = 0.5f;
                     stmRegenCooldownTimer = regenerationTime_STM;
                 }
+
                 break;
-            
+
             case CharacterState.ATTACKRUSH:
                 if (currentSTM <= attackSTMUse)
                 {
@@ -154,19 +158,19 @@ public class PlayerBehavior : MonoBehaviour
                     break;
                 }
 
-                Move(speed/3);
+                Move(Speed / 3);
                 PunchRush();
                 if (!IsAttcking)
                     state = CharacterState.NORMAL;
                 break;
-            
+
             case CharacterState.CHARGE:
                 Charge();
                 break;
-            
+
             case CharacterState.GRAPPLE:
                 break;
-            
+
             default:
                 break;
         }
@@ -180,14 +184,14 @@ public class PlayerBehavior : MonoBehaviour
         {
             rushHeat = Mathf.Lerp(rushHeat, 0, 0.2f);
         }
-        
-        cameraOffset.m_Offset = new Vector3(0f,0f, rushHeat / 2);
+
+        cameraOffset.m_Offset = new Vector3(0f, 0f, rushHeat / 2);
 
         if (stmRegenCooldownTimer < 0)
         {
-            currentSTM += STMRegenPersec * Time.deltaTime;
-            if (currentSTM > maxSTM)
-                currentSTM = maxSTM;
+            currentSTM += StaminaPerSeconds * Time.deltaTime;
+            if (currentSTM > MAXStm)
+                currentSTM = MAXStm;
         }
         else
         {
@@ -196,6 +200,16 @@ public class PlayerBehavior : MonoBehaviour
 
         DamageTimer -= Time.deltaTime;
         walksoundTimer -= Time.deltaTime;
+    }
+
+    public bool IsHeadingInteractables()
+    {
+        var cam = Camera.main;
+        var val = Physics.Raycast(cam.transform.position, cam.transform.forward, 5.0f,
+            LayerMask.NameToLayer("Interactables"));
+        
+        return val;
+
     }
 
     public void Move(float _speed)
@@ -214,13 +228,16 @@ public class PlayerBehavior : MonoBehaviour
 
         rBody.rotation *= rot;
 
-        if (inputvector.x != 0 || inputvector.y != 0)
-            animator.Play("WALK");
-        else
+        if (state == CharacterState.NORMAL)
         {
-            animator.Play("IDLE");
+            if (inputvector.x != 0 || inputvector.y != 0)
+                animator.Play("WALK");
+            else
+            {
+                animator.Play("IDLE");
+            }
         }
-        
+
         if (walksoundTimer < 0 && (inputvector.x != 0 || inputvector.y != 0))
         {
             if (Physics.Raycast(footRCO.position, Vector3.down, 0.1f))
@@ -243,6 +260,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void PunchRush()
     {
+        animator.Play("PUNCH");
+        
         
         if (punchTimer > 0)
         {
@@ -263,7 +282,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (!t) break;
            // Instantiate(effectOnHit, t.transform.position, quaternion.identity);
-           var h = new HitData((t.transform.position - transform.position).normalized,20.0f,attackPower,0.25f);
+           var h = new HitData((t.transform.position - transform.position).normalized,20.0f,AttackPower,0.25f);
            t.OnHit(h);
         }
         
@@ -296,16 +315,10 @@ public class PlayerBehavior : MonoBehaviour
         return rushDamageArea.GetTargetsInReach().Count != 0;
     }
 
-    public void SetUpgrade()
+    public void SetUpgrade(string id, float value)
     {
-        var data = CharacterUpgradeData.Instance;
-        maxHP += data.fullHealth;
-        HPRegenPersec += data.healPerSeconds;
-        maxSTM += data.fullStamina;
-        STMRegenPersec += data.staminaPerSeconds;
-        attackPower = attackPower * data.attackMult;
+        
     }
-
     public void GetMoney(int value)
     {
         money += value;

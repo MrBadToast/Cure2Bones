@@ -11,6 +11,8 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] private bool Debugmode = false;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private SoundModule_Base music;
+    [SerializeField] private GameplayUI ui;
     [SerializeField] private float timeLimit;
     public List<GameObject> enemies;
     
@@ -54,6 +56,7 @@ public class StageManager : MonoBehaviour
 
     public void StartStage()
     {
+        music.Play("main");
         onGameStarted();
     }
 
@@ -72,6 +75,10 @@ public class StageManager : MonoBehaviour
     public void StageComplete()
     {
         isTimer = false;
+        music.Stop();
+        music.Play("ambient");
+        GetComponent<SoundModule_Base>().Play("clear");
+        ui.OnClear();
     }
     
     private IEnumerator DebugStart()

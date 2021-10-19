@@ -16,15 +16,18 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TitleSceneControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HitData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Billboard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/QuickQuit.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UpgradeAttribute.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TitleSceneControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HitData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UpgradeButtonGraphics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UpgradeUIManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -32,7 +35,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/HitboxRotationCorrection.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TestTarget.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PunchArea.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgradeData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Single.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Multiple.cs" />
@@ -41,14 +43,19 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TitleSceneControl.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Billboard.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/QuickQuit.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/StageManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgrade.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterUpgradeData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UpgradeButtonGraphics.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UpgradeUIManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UpgradeAttribute.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/QuickQuit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
       </list>
     </option>
   </component>
@@ -125,6 +132,7 @@
       <workItem from="1634477742382" duration="6081000" />
       <workItem from="1634550558590" duration="1807000" />
       <workItem from="1634563571372" duration="13646000" />
+      <workItem from="1634633455463" duration="19048000" />
     </task>
     <servers />
   </component>
@@ -149,17 +157,17 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="377" y="0" width="1337" height="1028" key="dock-window-1" timestamp="1634032458954">
+    <state x="137" y="0" width="1522" height="1028" key="dock-window-1" timestamp="1634670079466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="377" y="0" width="1337" height="1028" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634032458954" />
+    <state x="137" y="0" width="1522" height="1028" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634670079466" />
     <state x="2536" y="240" key="run.anything.popup" timestamp="1634388145317">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2536" y="240" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634388145317" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1634395126652">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1634664450972">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634395126652" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634664450972" />
   </component>
 </project>
