@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [RequireComponent(typeof(AudioSource))]
-public class SoundModule_Base : MonoBehaviour
+public class SoundModule_Base : SerializedMonoBehaviour
 {
     protected AudioSource module_audsource;
 
-    [Header("RandomPitch")]
+    [Title("RandomPitch")]
     public bool RandomPitch;
     [Range(-3f,3f)]
     public float MaxPitch = 1.2f;
     [Range(-3f, 3f)]
     public float MinPitch = 0.8f;
 
-    [Header("RandomVolume")]
+    [Title("RandomVolume")]
     public bool RandomVolume;
     [Range(0f, 1f)]
     public float MaxVol = 1f;

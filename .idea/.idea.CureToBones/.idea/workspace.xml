@@ -17,10 +17,14 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TitleSceneControl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/HitData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Billboard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/QuickQuit.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -32,15 +36,19 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Base.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Single.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SoundModule_Multiple.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TargetObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/StageManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameStartSequence.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TitleSceneControl.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Billboard.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/QuickQuit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/HitData.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PatientBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/TargetDamageArea.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/StageManager.cs" />
       </list>
     </option>
   </component>
@@ -63,6 +71,14 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/Build/CureToBones.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="D:\CureToBones\Build" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
@@ -105,7 +121,10 @@
       <workItem from="1634210524915" duration="4551000" />
       <workItem from="1634313150550" duration="4048000" />
       <workItem from="1634381248363" duration="8822000" />
-      <workItem from="1634466533640" duration="1050000" />
+      <workItem from="1634466533640" duration="1858000" />
+      <workItem from="1634477742382" duration="6081000" />
+      <workItem from="1634550558590" duration="1807000" />
+      <workItem from="1634563571372" duration="13646000" />
     </task>
     <servers />
   </component>
