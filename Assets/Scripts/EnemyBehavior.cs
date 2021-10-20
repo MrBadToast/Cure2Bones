@@ -24,8 +24,8 @@ public class EnemyBehavior : TargetObject
 
     private float currentHealth;
     private float behaviorTimer;
-
-
+    
+    
     private void Awake()
     {
         rBody = GetComponent<Rigidbody>();
@@ -41,6 +41,12 @@ public class EnemyBehavior : TargetObject
 
         currentHealth = maxHealth;
         StartCoroutine(BehaviorRoutine());
+    }
+
+    private void Update()
+    {
+        if(transform.position.y < -50f)
+            Kill(new HitData());
     }
 
     public override void OnHit(HitData hitData)
@@ -75,7 +81,7 @@ public class EnemyBehavior : TargetObject
             switch (state)
             {
                 case NPCState.DISABLED:
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                     break;
                 
                 case NPCState.IDLE:
@@ -98,7 +104,7 @@ public class EnemyBehavior : TargetObject
                         }
                     }
 
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                     break;
 
                 case NPCState.ROAM:
@@ -125,7 +131,7 @@ public class EnemyBehavior : TargetObject
                         }
                     }
 
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                     break;
 
                 case NPCState.CHASE:
@@ -144,7 +150,7 @@ public class EnemyBehavior : TargetObject
                         }
                     }
 
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                     break;
 
                 case NPCState.PINNED:
@@ -155,7 +161,7 @@ public class EnemyBehavior : TargetObject
                     }
 
                     behaviorTimer -= Time.deltaTime;
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                     break;
             }
         }

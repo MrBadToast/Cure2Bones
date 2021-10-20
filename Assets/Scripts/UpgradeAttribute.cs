@@ -25,27 +25,34 @@ public class UpgradeAttribute : MonoBehaviour
     private void Awake()
     {
         animation = GetComponent<DOTweenAnimation>();
-    }
-
-    private void Start()
-    {
+        
         currentCost = InitialCost;
         currentLevel = 1;
         if (IsMultiplyValue) currentValue = 1f;
         else currentValue = 0f;
     }
 
+    private void Start()
+    {
+
+    }
+
     public void OnTryUpgrade()
     {
         if (IsUpgradeAvailable())
         {
+            GenericSounds.Instace.Play("ui_upgrade");
             PlayerBehavior.Instance.UseMoney(currentCost);
             currentLevel++;
             currentValue += ValuePerLevel;
-            currentCost = (int)(currentCost * Mathf.Pow(currentLevel, 1.25f));
+            currentCost = (int)(currentCost * 1.5f);
             CharacterUpgradeData.Instance.SetValue(UpgradeId, currentValue);
-            UpdateButtonGrapics();
+            UpgradeUIManager.Instance.OnUpdateGraphics();
             animation.DORestart();
+        }
+        else
+        {
+            GenericSounds.Instace.Play("ui_denied");
         }
     }
 

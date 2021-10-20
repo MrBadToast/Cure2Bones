@@ -15,8 +15,11 @@ public class HitData
     public float _dealtDamage = 0f;
     public float _stiffTime = 0f;
     public AttackType _attackType = AttackType.NORMAL;
-    
 
+
+    public HitData()
+    {
+    }
     public HitData(Vector3 direction, float power, float dealtDamage,float stiffTime, AttackType atkType = AttackType.NORMAL)
     {
         _direction = direction; _power = power; _dealtDamage = dealtDamage;

@@ -80,7 +80,7 @@ MonoBehaviour:
   type: 0
   playerDetectRange: 10
   wallDetectRange: 5
-  speed: 8
+  speed: 20
   maxHealth: 40
   damageToPlayer: 15
   deathEffectObject: {fileID: 8696995807445740573, guid: fe5d65698cc41104b99f103172bc5021, type: 3}

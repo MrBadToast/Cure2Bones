@@ -25,21 +25,25 @@ public class GameStartSequence : MonoBehaviour
         
         countdownText.text = "3";
         anim_countdownText.DORestart();
+        GenericSounds.Instace.Play("ui_tick");
 
         yield return new WaitForSeconds(1f);
 
         countdownText.text = "2";
         anim_countdownText.DORestart();
+        GenericSounds.Instace.Play("ui_tick");
         
         yield return new WaitForSeconds(1f);
         
         countdownText.text = "1";
         anim_countdownText.DORestart();
+        GenericSounds.Instace.Play("ui_tick");
         
         yield return new WaitForSeconds(1f);
         
         countdownText.text = "GO";
         anim_countdownText.DORestart();
+        GenericSounds.Instace.Play("ui_start");
         
         yield return new WaitForSeconds(0.5f);
         anim_countdownGroup.DOPlayById("COUNTDOWN_OUT");

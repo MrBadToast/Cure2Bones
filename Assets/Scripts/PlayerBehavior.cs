@@ -26,6 +26,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private GameObject HitEffectObject;
     [SerializeField] private ParticleSystem SpeedLineEffect;
     [SerializeField] private CinemachineCameraOffset cameraOffset;
+    [SerializeField] private Transform cameraTarget;
     //[SerializeField] private GameObject effectOnHit;
     [SerializeField] private float speed;
     [SerializeField] private float lookSensitivity;
@@ -223,6 +224,7 @@ public class PlayerBehavior : MonoBehaviour
         return false;
 
     }
+    
     public void Move(float _speed)
     {
         Vector2 inputvector = playerControl.Player.move.ReadValue<Vector2>();
@@ -232,12 +234,13 @@ public class PlayerBehavior : MonoBehaviour
         if (inputvector.y != 0)
             rBody.AddForce(transform.forward * (inputvector.y * _speed));
 
-        float x_rot = playerControl.Player.lookaround_x.ReadValue<float>() * lookSensitivity * Time.deltaTime;
-        //float y_rot = 
+        float x_rot = playerControl.Player.lookaround_x.ReadValue<float>() * lookSensitivity;
         
-        Quaternion rot = Quaternion.Euler(new Vector3(0f, x_rot, 0f));
+        transform.rotation *= quaternion.Euler(0f,x_rot,0f);
 
-        rBody.rotation *= rot;
+        // float y_rot = playerControl.Player.lookaround_y.ReadValue<float>() * lookSensitivity;
+        //
+        // cameraTarget.rotation *= quaternion.Euler( -y_rot,0f,0f);
 
         if (state == CharacterState.NORMAL)
         {
@@ -303,7 +306,7 @@ public class PlayerBehavior : MonoBehaviour
 
         if (targets.Count > 0)
         {
-            var hit =Instantiate(HitEffectObject, transform.position + transform.forward*2f, quaternion.identity);
+            var hit =Instantiate(HitEffectObject, transform.position + transform.forward*2f, quaternion.LookRotation(-transform.forward,Vector3.up));
             hit.GetComponent<SoundModule_Base>().Play("hit");
         }
         foreach (var t in targets)
@@ -353,13 +356,15 @@ public class PlayerBehavior : MonoBehaviour
     
     public bool UseMoney(int value)
     {
-        if (value > money)
+        if (value < money)
         {
+            Debug.Log("Money Used correctly");
             money -= value;
             return true;
         }
         else
         {
+            Debug.Log(" ! : Money Used Incorrectly");
             return false;
         }
     }
@@ -381,7 +386,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public void OnHealthDepleted()
     {
-        
+        state = CharacterState.DISABLE;
+        StageManager.Instance.GameOver();
     }
     
     public void EnableCharacter()

@@ -16,6 +16,7 @@ public class GameplayUI : MonoBehaviour
     [SerializeField] private GameObject waveAnim;
     [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private GameObject interacton;
+    [SerializeField] private GameObject gameover;
     [Space(20)] 
     [SerializeField] private Sprite CrosshairActive;
     [SerializeField] private Sprite CrosshairDeactive;
@@ -23,16 +24,26 @@ public class GameplayUI : MonoBehaviour
     private PlayerBehavior player;
     private bool _isplayerNull;
 
+    private Color warningColor;
+    
     private void Start()
     {
         player = PlayerBehavior.Instance;
         _isplayerNull = player == null;
+        warningColor = new Color(1f,0.5f,0f);
        // player.propertiesChanged += OnUpdateUI;
     }
+    
+     
     
     private void FixedUpdate()
     {
         if(_isplayerNull) return;
+
+        if (((int) player.CurrentHp) < 50) healthText.color = warningColor;
+        else healthText.color = Color.white;
+        if (((int) player.CurrentStm) < 50) staminaText.color = warningColor;
+        else staminaText.color = Color.white;
         
         healthText.text = ((int)player.CurrentHp).ToString() + " / " + player.MAXHp.ToString();
         staminaText.text = ((int)player.CurrentStm).ToString() + " / " + player.MAXStm.ToString();
@@ -72,6 +83,11 @@ public class GameplayUI : MonoBehaviour
         {
             interacton.SetActive(false);
         }
+    }
+
+    public void OnGameover()
+    {
+        gameover.SetActive(true);
     }
     
     public void CharacterStaminaAlert()

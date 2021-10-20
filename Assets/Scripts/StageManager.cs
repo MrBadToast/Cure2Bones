@@ -141,6 +141,14 @@ public class StageManager : MonoBehaviour
         ui.OnClear();
         nextStageGate.SetActive(true);
     }
+
+    public void GameOver()
+    {
+        music.Stop();
+        ui.OnGameover();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     
     private IEnumerator DebugStart()
     {

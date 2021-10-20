@@ -91,10 +91,12 @@
           <e p="Billboard.cs" t="Include" />
           <e p="CharacterUpgradeData.cs" t="Include" />
           <e p="ChargeDamageArea.cs" t="Include" />
+          <e p="End.cs" t="Include" />
           <e p="EnemyBehavior.cs" t="Include" />
           <e p="GameplayUI.cs" t="Include" />
           <e p="GameQuit.cs" t="Include" />
           <e p="GameStartSequence.cs" t="Include" />
+          <e p="GenericSounds.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
           <e p="Interactable_Base.cs" t="Include" />
           <e p="NextArenaGate.cs" t="Include" />
@@ -112,6 +114,7 @@
           <e p="TargetDamageArea.cs" t="Include" />
           <e p="TargetObject.cs" t="Include" />
           <e p="TestTarget.cs" t="Include" />
+          <e p="Title.cs" t="Include" />
           <e p="TitleSceneControl.cs" t="Include" />
           <e p="UpgradeAttribute.cs" t="Include" />
           <e p="UpgradeButtonGraphics.cs" t="Include" />
