@@ -20,11 +20,11 @@ public class GameStartSequence : MonoBehaviour
 
     IEnumerator Cor_Sequence()
     {
-        anim_countdownPanel.DOPlayById("COUNTDOWNPAN_IN");
-        anim_countdownGroup.DOPlayById("COUNTDOWN_IN");
+        anim_countdownPanel.DORestartById("COUNTDOWNPAN_IN");
+        anim_countdownGroup.DORestartById("COUNTDOWN_IN");
         
         countdownText.text = "3";
-        anim_countdownText.DOPlay();
+        anim_countdownText.DORestart();
 
         yield return new WaitForSeconds(1f);
 

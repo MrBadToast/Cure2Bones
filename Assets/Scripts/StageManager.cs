@@ -1,7 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Channels;
 using UnityEngine;
+
+[Serializable]
+public class Wave
+{
+    [SerializeField] private List<GameObject> waveSpawnObjects;
+
+    public void EnableAllSpawnObjects()
+    {
+        foreach (var obj in waveSpawnObjects)
+        {
+            obj.SetActive(true);
+            obj.GetComponent<TargetObject>().GameStarted();
+        }
+    }
+
+    public void RegisterObject(GameObject obj)
+    {
+        waveSpawnObjects.Add(obj);
+    }
+    
+    public bool RemoveObject(GameObject obj)
+    {
+        waveSpawnObjects.Remove(obj);
+        if (waveSpawnObjects.Count == 0)
+            return true;
+        
+        return false;
+    }
+}
 
 public class StageManager : MonoBehaviour
 {
@@ -13,17 +43,19 @@ public class StageManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private SoundModule_Base music;
     [SerializeField] private GameplayUI ui;
-    [SerializeField] private float timeLimit;
-    public List<GameObject> enemies;
+   // [SerializeField] private float timeLimit;
+    [SerializeField] private Wave[] waves;
+    private int currentWaves;
+    //public List<GameObject> enemies;
     
     public delegate void ONGameStarted();
 
     public ONGameStarted onGameStarted;
 
-    private float timer;
-    public float Timer => timer;
-
-    private bool isTimer = true;
+    // private float timer;
+    // public float Timer => timer;
+    //
+    // private bool isTimer = true;
     
     private void Awake()
     {
@@ -39,8 +71,8 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        timer = timeLimit;
-        if (Debugmode) StartCoroutine(DebugStart());
+        //timer = timeLimit;
+        //if (Debugmode) StartCoroutine(DebugStart());
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -48,33 +80,60 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (timer > 0 && isTimer)
-        {
-            timer -= Time.deltaTime;
-        }
+        // if (timer > 0 && isTimer)
+        // {
+        //     timer -= Time.deltaTime;
+        // }
     }
 
     public void StartStage()
     {
         music.Play("main");
         onGameStarted();
+        StartNewWave();
     }
 
     public void RegisterEnemyObject(GameObject obj)
     {
-        enemies.Add(obj);
+        waves[currentWaves].RegisterObject(obj);
     }
     
     public void RemoveEnemyObject(GameObject obj)
     {
-        enemies.Remove(obj);
-        if(enemies.Count == 0)
-            StageComplete();
+        if (waves[currentWaves].RemoveObject(obj))
+        {
+            if(currentWaves < waves.Length)
+                WaveComplete();
+            else
+            {
+                AllWavesComplete();
+            }
+            
+        }
     }
 
-    public void StageComplete()
+    public void WaveComplete()
     {
-        isTimer = false;
+        currentWaves++;
+        if (currentWaves < waves.Length)
+        {
+            ui.OnWaveClear(currentWaves);
+            Invoke("StartNewWave", 2.0F);
+        }
+        else
+        {
+            AllWavesComplete();
+        }
+    }
+
+    public void StartNewWave()
+    {
+        waves[currentWaves].EnableAllSpawnObjects();
+    }
+
+    public void AllWavesComplete()
+    {
+        //isTimer = false;
         music.Stop();
         music.Play("ambient");
         GetComponent<SoundModule_Base>().Play("clear");

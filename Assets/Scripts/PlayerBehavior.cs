@@ -99,6 +99,7 @@ public class PlayerBehavior : MonoBehaviour
         playerControl = new PlayerControl();
         playerControl.Player.Enable();
         playerControl.Player.jump.started += Jump;
+        playerControl.Player.interact.started += Interact;
     }
 
     private void Start()
@@ -205,13 +206,23 @@ public class PlayerBehavior : MonoBehaviour
     public bool IsHeadingInteractables()
     {
         var cam = Camera.main;
-        var val = Physics.Raycast(cam.transform.position, cam.transform.forward, 5.0f,
-            LayerMask.NameToLayer("Interactables"));
+        var val = Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5.0f);
+
+        Debug.DrawLine(cam.transform.position, (cam.transform.position + cam.transform.forward*5.0f),Color.magenta);
+
+        foreach (var v in val)
+        {
+            if (v.transform.gameObject.layer == 10)
+            {
+                Debug.Log("K");
+                return true;
+            }
+        }
         
-        return val;
+
+        return false;
 
     }
-
     public void Move(float _speed)
     {
         Vector2 inputvector = playerControl.Player.move.ReadValue<Vector2>();
@@ -250,10 +261,27 @@ public class PlayerBehavior : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (state == CharacterState.DISABLE) return;
         bool isGrounded = Physics.Raycast(footRCO.position, Vector3.down, 0.1f);
         if (disableControls || !isGrounded) return;
 
         rBody.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+    }
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (state == CharacterState.DISABLE) return;
+        
+        var cam = Camera.main;
+        var val = Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5.0f);
+
+        foreach (var v in val)
+        {
+            if (v.transform.gameObject.layer == 10)
+            {
+                v.collider.GetComponent<Interactable_Base>().Interact();
+            }
+        }
     }
 
     private float punchTimer = 0f;
@@ -281,8 +309,7 @@ public class PlayerBehavior : MonoBehaviour
         foreach (var t in targets)
         {
             if (!t) break;
-           // Instantiate(effectOnHit, t.transform.position, quaternion.identity);
-           var h = new HitData((t.transform.position - transform.position).normalized,20.0f,AttackPower,0.25f);
+            var h = new HitData((t.transform.position - transform.position).normalized,20.0f,AttackPower,0.25f);
            t.OnHit(h);
         }
         
@@ -361,6 +388,16 @@ public class PlayerBehavior : MonoBehaviour
     {
         state = CharacterState.NORMAL;
     }
- 
+
+    public void DisablePlayer()
+    {
+        state = CharacterState.DISABLE;
+    }
+
+    public void EnablePlayer()
+    {
+        state = CharacterState.NORMAL;
+    }
+    
 }
 

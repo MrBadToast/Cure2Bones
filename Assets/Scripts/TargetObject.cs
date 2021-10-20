@@ -9,7 +9,7 @@ public class TargetObject : MonoBehaviour
 
     public virtual void Start()
     {
-        StageManager.Instance.onGameStarted += GameStarted;
+        //StageManager.Instance.onGameStarted += GameStarted;
     }
 
 }
