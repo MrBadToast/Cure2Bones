@@ -34,6 +34,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ChargeDamageArea.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameplayUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UpgradeUIManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PauseMenu.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -145,7 +146,7 @@
       <workItem from="1634550558590" duration="1807000" />
       <workItem from="1634563571372" duration="13646000" />
       <workItem from="1634633455463" duration="23980000" />
-      <workItem from="1634722559477" duration="10668000" />
+      <workItem from="1634722559477" duration="11319000" />
     </task>
     <servers />
   </component>

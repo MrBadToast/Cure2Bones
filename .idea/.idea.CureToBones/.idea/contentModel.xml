@@ -99,6 +99,7 @@
           <e p="Interactable_Base.cs" t="Include" />
           <e p="NextArenaGate.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
+          <e p="PauseMenu.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
           <e p="QuickQuit.cs" t="Include" />
           <e p="RestartScene.cs" t="Include" />
