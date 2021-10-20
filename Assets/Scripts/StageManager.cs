@@ -45,6 +45,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private GameplayUI ui;
    // [SerializeField] private float timeLimit;
     [SerializeField] private Wave[] waves;
+    [SerializeField] private GameObject nextStageGate;
     private int currentWaves;
     //public List<GameObject> enemies;
     
@@ -138,6 +139,7 @@ public class StageManager : MonoBehaviour
         music.Play("ambient");
         GetComponent<SoundModule_Base>().Play("clear");
         ui.OnClear();
+        nextStageGate.SetActive(true);
     }
     
     private IEnumerator DebugStart()

@@ -96,9 +96,11 @@
           <e p="GameStartSequence.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
           <e p="Interactable_Base.cs" t="Include" />
+          <e p="NextArenaGate.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
           <e p="QuickQuit.cs" t="Include" />
+          <e p="SceneControl.cs" t="Include" />
           <e p="SelfDestruct.cs" t="Include" />
           <e p="SoundModule_Base.cs" t="Include" />
           <e p="SoundModule_Multiple.cs" t="Include" />
