@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4826894492226766524}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 5187973040310974707}
   m_RootOrder: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   type: 0
   playerDetectRange: 10
   wallDetectRange: 10
-  speed: 5
+  speed: 0
   hpToHeal: 50
   moneyDrop: 50
   FinalHitEffectObject: {fileID: 8696995807445740573, guid: ba305c8233e611440b7bfbedb85e12b6, type: 3}
@@ -161,10 +161,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 1
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000059604645, y: 0.38, z: -0.00000008940697}
 --- !u!54 &5187973040310974719
 Rigidbody:
   m_ObjectHideFlags: 0
