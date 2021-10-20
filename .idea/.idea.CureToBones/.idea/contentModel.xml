@@ -93,6 +93,7 @@
           <e p="ChargeDamageArea.cs" t="Include" />
           <e p="EnemyBehavior.cs" t="Include" />
           <e p="GameplayUI.cs" t="Include" />
+          <e p="GameQuit.cs" t="Include" />
           <e p="GameStartSequence.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
           <e p="Interactable_Base.cs" t="Include" />
@@ -100,6 +101,7 @@
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
           <e p="QuickQuit.cs" t="Include" />
+          <e p="RestartScene.cs" t="Include" />
           <e p="SceneControl.cs" t="Include" />
           <e p="SelfDestruct.cs" t="Include" />
           <e p="SoundModule_Base.cs" t="Include" />
