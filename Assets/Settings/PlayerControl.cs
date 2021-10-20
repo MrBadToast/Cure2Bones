@@ -73,6 +73,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""28c8ea22-13a2-4db5-88d6-c173878489e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -196,6 +204,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""lookaround_y"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""650845e7-20e9-4f2a-84b8-e6497c417c23"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -211,6 +230,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_pick = m_Player.FindAction("pick", throwIfNotFound: true);
         m_Player_attack = m_Player.FindAction("attack", throwIfNotFound: true);
         m_Player_charge = m_Player.FindAction("charge", throwIfNotFound: true);
+        m_Player_interact = m_Player.FindAction("interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -267,6 +287,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_pick;
     private readonly InputAction m_Player_attack;
     private readonly InputAction m_Player_charge;
+    private readonly InputAction m_Player_interact;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -278,6 +299,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @pick => m_Wrapper.m_Player_pick;
         public InputAction @attack => m_Wrapper.m_Player_attack;
         public InputAction @charge => m_Wrapper.m_Player_charge;
+        public InputAction @interact => m_Wrapper.m_Player_interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -308,6 +330,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @charge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
                 @charge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
                 @charge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCharge;
+                @interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -333,6 +358,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @charge.started += instance.OnCharge;
                 @charge.performed += instance.OnCharge;
                 @charge.canceled += instance.OnCharge;
+                @interact.started += instance.OnInteract;
+                @interact.performed += instance.OnInteract;
+                @interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -346,5 +374,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnPick(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnCharge(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

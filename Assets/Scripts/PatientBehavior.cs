@@ -201,6 +201,7 @@ public class PatientBehavior : TargetObject
                     (hit._direction + Vector3.Cross(hit._direction,Vector3.up) * Random.Range(-1f,1f)) * 100f, ForceMode.Impulse);
             }
             germ.GetComponent<EnemyBehavior>().GameStarted();
+            StageManager.Instance.RegisterEnemyObject(germ);
         }
 
         Instantiate(FinalHitEffectObject, transform.position, quaternion.identity);

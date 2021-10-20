@@ -9,7 +9,7 @@ public class UpgradeUIManager : MonoBehaviour
     private static UpgradeUIManager _instance;
     public static UpgradeUIManager Instance => _instance;
 
-    private UpgradeAttribute[] _upgradeAttributes;
+    [SerializeField] private UpgradeAttribute[] _upgradeAttributes;
     [SerializeField] private GameObject UIObject;
 
     public delegate void ONUpdateGrapics();
@@ -29,24 +29,37 @@ public class UpgradeUIManager : MonoBehaviour
         }
     }
 
+    private bool flag = false;
+
+    private void Start()
+    {
+        OnUpdateGraphics();
+        UIObject.SetActive(false);
+    }
+
     public void EnableUpgradeUI()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        PlayerBehavior.Instance.DisablePlayer();
+        
         UIObject.SetActive(true);
         UIObject.GetComponent<DOTweenAnimation>().DORestartById("UPGRADE_ENABLE");
         UIObject.GetComponent<CanvasGroup>().interactable = true;
+        
         OnUpdateGraphics();
     }
 
     public void DisableUpgradeUI()
     {
-        UIObject.GetComponent<DOTweenAnimation>().DORestartById("UPGRADE_DISABLE");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
+        PlayerBehavior.Instance.EnablePlayer();
+        
         UIObject.GetComponent<CanvasGroup>().interactable = false;
-        StartCoroutine(Cor_DisableUI());
-    }
-
-    IEnumerator Cor_DisableUI()
-    {
-        yield return new WaitForSeconds(1.0f);
         UIObject.SetActive(false);
     }
+    
 }

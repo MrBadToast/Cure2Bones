@@ -87,6 +87,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="ArenaGate.cs" t="Include" />
           <e p="Billboard.cs" t="Include" />
           <e p="CharacterUpgradeData.cs" t="Include" />
           <e p="ChargeDamageArea.cs" t="Include" />
@@ -94,6 +95,7 @@
           <e p="GameplayUI.cs" t="Include" />
           <e p="GameStartSequence.cs" t="Include" />
           <e p="HitData.cs" t="Include" />
+          <e p="Interactable_Base.cs" t="Include" />
           <e p="PatientBehavior.cs" t="Include" />
           <e p="PlayerBehavior.cs" t="Include" />
           <e p="QuickQuit.cs" t="Include" />
@@ -108,6 +110,7 @@
           <e p="TitleSceneControl.cs" t="Include" />
           <e p="UpgradeAttribute.cs" t="Include" />
           <e p="UpgradeButtonGraphics.cs" t="Include" />
+          <e p="UpgradeStation.cs" t="Include" />
           <e p="UpgradeUIManager.cs" t="Include" />
         </e>
         <e p="Settings" t="Include">
