@@ -71,7 +71,7 @@ MonoBehaviour:
   maxHP: 100
   maxSTM: 200
   STMRegenPersec: 20
-  HPRegenPersec: 3
+  HPRegenPersec: 1
   regenerationTime_STM: 1
   charge_Speed: 50
   charge_STMUse: 100
