@@ -122,7 +122,7 @@ public class PlayerBehavior : MonoBehaviour
         var IsAttcking = playerControl.Player.attack.phase == InputActionPhase.Started;
         var IsCharging = playerControl.Player.charge.phase == InputActionPhase.Started;
 
-        chargeCoolDown -= Time.time;
+        chargeCoolDown -= Time.fixedDeltaTime;
 
         switch (state)
         {
@@ -358,13 +358,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (value < money)
         {
-            Debug.Log("Money Used correctly");
             money -= value;
             return true;
         }
         else
         {
-            Debug.Log(" ! : Money Used Incorrectly");
             return false;
         }
     }
